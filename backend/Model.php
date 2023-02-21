@@ -34,7 +34,7 @@ abstract class Model extends DbModel
         return $this->labels()[$attribute] ?? $attribute;
     }
 
-    public function validate()
+    public function validate(): bool
     {
         foreach ($this->rules() as $attribute => $rules) {
             $value = $this->{$attribute};
@@ -75,7 +75,7 @@ abstract class Model extends DbModel
         $this->errors[$attribute][] = $message;
     }
 
-    public function errorMessages()
+    public function errorMessages(): array
     {
         return [
             self::RULE_REQUIRED => 'The {field} input is required',
