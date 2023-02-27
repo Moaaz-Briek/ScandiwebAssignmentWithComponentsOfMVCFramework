@@ -42,20 +42,37 @@ $(document).ready(function(e)
         length: /^\d+$/,
         weight: /^\d+$/,
     };
+
     //Validation function
-    function validate(field, regex)
-    {
-        if(regex.test(field.value)){
-            //if passed, Add to the input tag valid class
-            field.className = 'valid form-control ';
-        }else{
-            //if not passed, Add to the input tag invalid class
-            field.className = 'invalid form-control';
+    function validateInputs(field, regex) {
+        if (field.attributes.name.value === "sku") {
+            $.ajax({
+                type: "POST",
+                url: '/checkSku',
+                data: {val: field.value},
+                success: function (response) {
+                    if (response !== 'exist' && regex.test(field.value)) {
+                        field.className = 'valid form-control ';
+                    } else {
+                        //if not passed, Add to the input tag invalid class
+                        field.className = 'invalid form-control';
+                    }
+                },
+            });
+        } else {
+            if (regex.test(field.value)) {
+                //if passed, Add to the input tag valid class
+                field.className = 'valid form-control ';
+            } else {
+                //if not passed, Add to the input tag invalid class
+                field.className = 'invalid form-control';
+            }
         }
     }
+
     inputs.forEach((input) => {
         input.addEventListener("change", (e) => {
-            validate(e.target, patterns[e.target.attributes.name.value]);
+            validateInputs(e.target, patterns[e.target.attributes.name.value]);
             if($(input).attr('class').startsWith('valid')){
                 $('button').attr('disabled', false);
             }

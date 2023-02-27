@@ -48,6 +48,18 @@ class ProductController
         return Application::$app->view->renderView('/AddProduct', ['model' => $this->product]);
     }
 
+    public function checkSku(Request $request)
+    {
+        if($request->isPost()) {
+            $inputs = $request->getBody();
+            $skuValue =  $inputs['val'];
+            if($this->product->findOne(['sku' => $skuValue])) {
+                return 'exist';
+            }
+            return 'notExist';
+        }
+    }
+
     public function deleteProduct(Request $request)
     {
         if ($request->isPost()) {

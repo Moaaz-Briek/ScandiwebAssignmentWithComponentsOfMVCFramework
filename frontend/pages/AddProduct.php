@@ -27,7 +27,7 @@
         </div>
         <div class="col-lg-6 col-md-9 col-sm-8">
             <input value="<?= $model->{'sku'} ?>" required type="text" name="sku" class="form-control <?= $model->hasError('sku') ? 'is-invalid' : ''; ?>" id="sku" placeholder="SKU">
-            <p>Product Sku should be required, unique, no #$%^& characters.</p>
+            <p>Product Sku should be required, unique, no special characters (!@#$%^&*()<>?).</p>
             <div class="invalid-feedback" style="display: block">
                 <?php echo $model->getFirstError('sku');?>
             </div>
